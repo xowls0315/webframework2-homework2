@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>로그인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 80px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+        }
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .link-btn {
+            width: 400px;
+            background-color: #008CBA;
+        }
+        .link-btn:hover {
+            background-color: #0074a2;
+        }
+    </style>
+</head>
+<body>
+<h2>🔐 로그인</h2>
+
+<form method="post" th:action="@{/login}">
+    <label>Email:
+        <input type="text" name="username" required />
+    </label>
+    <label>Password:
+        <input type="password" name="password" required />
+    </label>
+    <button class="btn" type="submit">로그인</button>
+</form>
+
+<div th:if="${param.error}">
+    <p style="color:red;">❌ 로그인 실패: 이메일 또는 비밀번호가 틀렸습니다.</p>
+</div>
+<div th:if="${param.logout}">
+    <p style="color:green;">✅ 로그아웃 되었습니다.</p>
+</div>
+
+
+<br/>
+<a th:href="@{/register}">
+    <button class="btn link-btn">회원가입</button>
+</a>
+
+</body>
+</html>

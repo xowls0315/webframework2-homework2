@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:insert="~{common :: commonHead}">
     <title>Product Manager</title>
@@ -9,7 +9,23 @@
 <body>
 <div class="container">
     <h1 class="mt-5">Product List</h1>
-    <a class="btn btn-primary mb-3" th:href="@{/products/new}">Create New Product</a>
+    <!-- 로그아웃 버튼 (모든 로그인 사용자에게 보이게 하기) -->
+    <div class="mb-3" sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-outline-secondary">🚪 로그아웃</button>
+        </form>
+    </div>
+
+
+    <!-- 🔐 관리자 전용 사용자 목록 버튼 -->
+    <div class="mb-3" sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-dark" th:href="@{/admin/users}">전체 사용자 목록</a>
+    </div>
+    <!-- 관리자만 상품 등록 버튼 보이기 -->
+    <a class="btn btn-primary mb-3"
+       sec:authorize="hasRole('ADMIN')"
+       th:href="@{/products/new}">Create New Product</a>
+
 
     <table class="table table-bordered">
         <thead>
@@ -30,15 +46,29 @@
             <td th:text="${product.madeIn}">Made in</td>
             <td th:text="${product.price}">Price</td>
             <td>
-                <a class="btn btn-primary btn-sm" th:href="@{'/products/edit/' + ${product.id}}">Edit</a>
-                <a class="btn btn-danger btn-sm" th:href="@{'/products/delete/' + ${product.id}}">Delete</a>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <a class="btn btn-primary btn-sm" th:href="@{'/products/edit/' + ${product.id}}">Edit</a>
+                    <a class="btn btn-danger btn-sm"
+                       th:href="@{'/products/delete/' + ${product.id}}"
+                       onclick="return confirm('정말 삭제하시겠습니까?')">Delete</a>
+                </div>
+
+                <div sec:authorize="hasRole('USER')">
+                    <button class="btn btn-secondary btn-sm" disabled>Edit</button>
+                    <button class="btn btn-secondary btn-sm" disabled>Delete</button>
+                </div>
             </td>
+
         </tr>
         </tbody>
     </table>
 </div>
 
-<!-- Bootstrap JS fragment 삽입 -->
+<!-- 로그인 성공 alert -->
+<script th:if="${param.loginSuccess}">
+    alert("✅ 로그인에 성공하였습니다.");
+</script>
+
 <div th:insert="~{common :: commonScript}"></div>
 </body>
 </html>

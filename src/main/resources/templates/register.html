@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 80px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+        }
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .link-btn {
+            width: 400px;
+            background-color: #008CBA;
+        }
+        .link-btn:hover {
+            background-color: #0074a2;
+        }
+    </style>
+</head>
+<body>
+<h2>📝 회원가입</h2>
+
+<form th:action="@{/register}" method="post">
+    <label>Email:
+        <input type="text" name="email" required />
+    </label>
+    <label>Password:
+        <input type="password" name="password" required />
+    </label>
+    <button class="btn" type="submit">가입하기</button>
+</form>
+
+<br/>
+<a th:href="@{/login}">
+    <button class="btn link-btn">로그인으로 돌아가기</button>
+</a>
+</body>
+</html>

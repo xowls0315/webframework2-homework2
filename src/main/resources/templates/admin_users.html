@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>전체 사용자 목록</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 80%;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #555;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #444;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .btn-back:hover {
+      background-color: #222;
+    }
+  </style>
+</head>
+<body>
+
+<h2>👤 전체 사용자 목록</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Email</th>
+    <th>Role</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.id}">1</td>
+    <td th:text="${user.email}">admin@hansung.ac.kr</td>
+    <td th:text="${user.role}">ROLE_ADMIN</td>
+  </tr>
+  </tbody>
+</table>
+
+<a th:href="@{/products}" class="btn-back">← 돌아가기</a>
+
+</body>
+</html>
